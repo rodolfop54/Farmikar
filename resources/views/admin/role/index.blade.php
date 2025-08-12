@@ -1,0 +1,123 @@
+@extends('adminlte::page')
+
+@section('title', 'Roles')
+
+@section('content_header')
+    <h1>Roles</h1>
+@stop
+
+@section('content')
+
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Inicio</a></li>
+        <li class="breadcrumb-item active">Roles</li>
+    </ol>
+
+    <div class="card card-outline card-primary">
+        <div class="card-header">
+            @can('crear-role')
+                <a href="{{ route('admin.role.create') }}">
+                    <button type="button" class="btn btn-primary">Crear nuevo rol</button>
+                </a> 
+            @endcan
+        </div>
+        <div class="card-body">
+            <table class="table table-striped" id="roles">
+                <thead>
+                    <tr>
+                        <th>Rol</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($roles as $item)
+                    <tr>
+                        <td>
+                            {{$item->name}}
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+
+                                @can('editar-role')
+                                <form action="{{route('admin.role.edit',['role'=>$item])}}" method="get">
+                                    <button type="submit" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+                                </form>
+                                @endcan
+
+                                @can('eliminar-role')
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmModal-{{$item->id}}"><i class="fa-solid fa-trash-can"></i></button>
+                                @endcan
+
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Modal de confirmación-->
+                    <div class="modal fade" id="confirmModal-{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Mensaje de confirmación</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    ¿Seguro que quieres eliminar el rol?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    <form action="{{ route('admin.role.destroy',['role'=>$item->id]) }}" method="post">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger">Confirmar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+@stop
+
+@section('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.4/css/dataTables.bootstrap4.css">
+@stop
+
+@section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.1.4/js/dataTables.bootstrap4.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.bootstrap4.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+            $(document).ready(function() {
+            $('#roles').DataTable();
+
+            // Show success message
+            @if (session('success'))
+                let message = "{{session('success')}}";
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: message
+                });
+            @endif
+        });
+    </script>
+@stop

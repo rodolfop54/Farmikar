@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+body {
+    font-family: "Oswald", sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-image: url('/images/26800.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.logo-container {
+    margin-bottom: 20px;
+}
+
+.logo-container img {
+    max-width: 300px; /* Tamaño del logo */
+    height: auto;
+}
+
+.contenedor-formulario {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+}
+
+.cuadrado {
+    width: 100%;
+    max-width: 350px;
+    padding: 30px;
+    background-color: rgba(195, 226, 233, 0.9);
+    color: #0056b3;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(41, 220, 244, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    width: 100%;
+    position: relative;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.input-icon-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon-wrapper i {
+    position: absolute;
+    left: 10px;
+    color: #ccc;
+}
+
+.input-icon-wrapper input {
+    padding-left: 35px;
+}
+
+.button-group {
+    text-align: center;
+    width: 100%;
+}
+
+button {
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.text-danger {
+    color: red;           /* Cambia el color a rojo */
+    font-size: 12px;      /* Haz el texto más pequeño */
+    font-family: Arial, sans-serif; /* Cambia la fuente si es necesario */
+    margin-top: 5px;      /* Añade espacio por encima */
+    display: block;       /* Asegura que el mensaje se muestre como un bloque */
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Media query para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .cuadrado {
+        width: 80%;
+    }
+
+    .logo-container img {
+        max-width: 300px; /* Reducir tamaño del logo en pantallas pequeñas */
+    }
+}
